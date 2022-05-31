@@ -38,15 +38,15 @@ public class MainTestArrayStorage {
         ARRAY_STORAGE.delete(r1.getUuid());
         ARRAY_STORAGE.delete(r5.getUuid());
 
-        {
-            Resume[] testR = new Resume[10000];
-            for (int i = 0; i < 10000; i++) {
-                testR[i] = new Resume();
-                testR[i].setUuid("uuid" + i);
-                ARRAY_STORAGE.save(testR[i]);
-            }
-            ARRAY_STORAGE.save(r10001);
+
+        Resume[] testR = new Resume[10000];
+        for (int i = 0; i < 10000; i++) {
+            testR[i] = new Resume();
+            testR[i].setUuid("uuid" + i);
+            ARRAY_STORAGE.save(testR[i]);
         }
+        ARRAY_STORAGE.save(r10001);
+
 
         printAll();
         ARRAY_STORAGE.clear();
