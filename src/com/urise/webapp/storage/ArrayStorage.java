@@ -33,19 +33,7 @@ public class ArrayStorage {
         } else if (index != -1) {
             System.out.println("Резюме c uuid " + r.getUuid() + " уже существует");
         } else {
-            if (r.getUuid() != null) {
                 storage[size++] = r;
-            } else {
-                System.out.println("Это резюме без uuid");
-                for (int i = 0; i < STORAGE_LIMIT + 1; i++) {
-                    String trialUuid = "uuid" + i;
-                    if (getIndex(trialUuid) == -1) {
-                        r.setUuid(trialUuid);
-                        System.out.println("Резюме присвоен uuid " + trialUuid);
-                        return;
-                    }
-                }
-            }
         }
     }
 
