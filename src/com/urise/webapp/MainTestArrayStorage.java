@@ -9,10 +9,10 @@ import com.urise.webapp.storage.SortedArrayStorage;
  * Test for your com.urise.webapp.storage.ArrayStorage implementation
  */
 public class MainTestArrayStorage {
-    private static final AbstractArrayStorage  ARRAY_STORAGE = new SortedArrayStorage();
+    private static final AbstractArrayStorage ARRAY_STORAGE = new SortedArrayStorage();
 
-    private static final AbstractArrayStorage  ARRAY_STORAGE1 = new SortedArrayStorage();
-    private static final AbstractArrayStorage  ARRAY_STORAGE2 = new ArrayStorage();
+    private static final AbstractArrayStorage ARRAY_STORAGE1 = new SortedArrayStorage();
+    private static final AbstractArrayStorage ARRAY_STORAGE2 = new ArrayStorage();
 
     public static void main(String[] args) {
         final Resume r3 = new Resume();
@@ -30,7 +30,8 @@ public class MainTestArrayStorage {
         ARRAY_STORAGE.save(r1);
 //        ARRAY_STORAGE.save(r10001);
 //
-   //     System.out.println("Index of r2 " + Arrays.binarySearch(ARRAY_STORAGE.storage, 0, ARRAY_STORAGE.size(), r5));
+        //     System.out.println("Index of r2 " + Arrays.binarySearch(ARRAY_STORAGE.storage, 0, ARRAY_STORAGE.size()
+        //     , r5));
 
         System.out.println("Get r1: " + ARRAY_STORAGE.get(r1.getUuid()));
         System.out.println("Size: " + ARRAY_STORAGE.size());
@@ -55,7 +56,10 @@ public class MainTestArrayStorage {
         }
 //
 //        ARRAY_STORAGE.save(r10001);
-       printAll();
+        printAll();
+
+        ARRAY_STORAGE.get("uuid9998");
+
         System.out.println("Size: " + ARRAY_STORAGE.size());
         ARRAY_STORAGE.clear();
         printAll();
