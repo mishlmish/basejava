@@ -1,17 +1,19 @@
 package com.urise.webapp.storage;
 
+import com.urise.webapp.model.Resume;
+
 /**
  * Array based storage for Resumes
  */
 public class ArrayStorage extends AbstractArrayStorage {
 
     @Override
-    int insertionPoint(int index) {
-        return size;
+    protected void insertElement(Resume r, int index) {
+        storage[size] = r;
     }
 
     @Override
-    void deleteElement(int index) {
+    protected void deleteElement(int index) {
         storage[index] = storage[size - 1];
     }
 
