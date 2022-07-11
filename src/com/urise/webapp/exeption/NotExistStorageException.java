@@ -1,7 +1,7 @@
 package com.urise.webapp.exeption;
 
-public class NotExistStorageException extends StorageException{
+public class NotExistStorageException extends StorageException {
     public NotExistStorageException(String uuid) {
-        super("Resume " + uuid + " not exist", uuid);
+        super("Resume " + uuid + " did not exist", uuid);
     }
 }
