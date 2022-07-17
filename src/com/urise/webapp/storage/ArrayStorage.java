@@ -4,12 +4,12 @@ import com.urise.webapp.model.Resume;
 
 public class ArrayStorage extends AbstractArrayStorage {
     @Override
-    protected void saveToIndex(Object index, Resume r) {
+    protected void insertResume(Object index, Resume r) {
         storage[size()] = r;
     }
 
     @Override
-    protected void fillDeletedElement(Object searchKey) {
+    protected void deleteResume (Object searchKey) {
         storage[(int) searchKey] = storage[size() - 1];
     }
 

@@ -7,7 +7,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.Assert;
 
-public class AbstractStorageTest {
+public abstract class AbstractStorageTest {
 
     protected Storage storage;
 
@@ -51,7 +51,7 @@ public class AbstractStorageTest {
         storage.save(new Resume());
         assertSize(4);
 //        System.out.println("check to add Resume with non generated uuid");
-        storage.save(new Resume("testUuid"));
+        storage.save(RESUME_4);
         assertSize(5);
     }
 

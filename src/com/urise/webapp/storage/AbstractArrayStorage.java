@@ -9,9 +9,9 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     protected final Resume[] storage = new Resume[STORAGE_LIMIT];
     private int size;
 
-    protected abstract void saveToIndex(Object index, Resume r);
+    protected abstract void insertResume(Object index, Resume r);
 
-    protected abstract void fillDeletedElement(Object searchKey);
+    protected abstract void deleteResume (Object searchKey);
 
     @Override
     protected void doSave(Resume r, Object searchKey) {
@@ -19,7 +19,7 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
         if (size >= STORAGE_LIMIT) {
             throw new StorageException("Array storage overflowed, can not save uuid " + uuid, uuid);
         }
-        saveToIndex(searchKey, r);
+        insertResume(searchKey, r);
         size++;
     }
 
@@ -35,7 +35,7 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
 
     @Override
     protected void doDelete(Object searchKey) {
-        fillDeletedElement(searchKey);
+        deleteResume (searchKey);
         storage[size - 1] = null;
         size--;
     }
