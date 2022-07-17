@@ -8,7 +8,7 @@ import java.lang.reflect.Method;
 public class MainReflection {
     public static void main(String[] args) throws IllegalAccessException, NoSuchMethodException,
             InvocationTargetException {
-        Resume r = new Resume();
+        Resume r = new Resume("newName");
         Field field = r.getClass().getDeclaredFields()[0];
         field.setAccessible(true);
         System.out.println(field.getName());
@@ -16,7 +16,7 @@ public class MainReflection {
         System.out.println(r);
         field.set(r, "new_uuid");
 
-//        Выводит массив методов класса. Ищем toString() - индекс  2
+//        Р’С‹РІРѕРґРёС‚ РјР°СЃСЃРёРІ РјРµС‚РѕРґРѕРІ РєР»Р°СЃСЃР°. РС‰РµРј toString() - РёРЅРґРµРєСЃ  2
         Class<Resume> mClassObject = Resume.class;
         Method[] methods = mClassObject.getMethods();
         for (int i = 0; i < methods.length; i++) {
@@ -25,7 +25,7 @@ public class MainReflection {
         System.out.println();
         System.out.println(mClassObject.getMethods()[2].invoke(r));
         System.out.println();
-// вариант коммита
+// РІР°СЂРёР°РЅС‚ РєРѕРјРјРёС‚Р°
         Class<? extends Resume> resumeClass = r.getClass();
         Method method = resumeClass.getMethod("toString");
         String result = (String) method.invoke(r);

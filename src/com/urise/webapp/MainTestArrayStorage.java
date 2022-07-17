@@ -7,7 +7,7 @@ import com.urise.webapp.storage.ListStorage;
 import com.urise.webapp.storage.SortedArrayStorage;
 
 public class MainTestArrayStorage {
-    private static final AbstractArrayStorage ARRAY_STORAGE = new ArrayStorage();
+    private static final AbstractArrayStorage ARRAY_STORAGE = new SortedArrayStorage();
     private static final AbstractArrayStorage ARRAY_STORAGE1 = new SortedArrayStorage();
     private static final AbstractArrayStorage ARRAY_STORAGE2 = new ArrayStorage();
 
@@ -44,7 +44,7 @@ public class MainTestArrayStorage {
         printAll();
 
         for (int i = 0; i < 9997; i++) {
-            ARRAY_STORAGE.save(new Resume());
+            ARRAY_STORAGE.save(new Resume("newName"));
         }
         ARRAY_STORAGE.save(r4);
 //        ARRAY_STORAGE.save(r10001);
@@ -63,7 +63,7 @@ public class MainTestArrayStorage {
 
     static void printAll() {
         System.out.println("\nGet All ");
-        for (Resume r : ARRAY_STORAGE.getAll()) {
+        for (Resume r : ARRAY_STORAGE.getAllSorted()) {
             System.out.println(r);
         }
     }

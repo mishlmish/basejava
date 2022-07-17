@@ -3,8 +3,28 @@ package com.urise.webapp.storage;
 import com.urise.webapp.model.Resume;
 
 import java.util.Arrays;
+import java.util.Comparator;
 
 public class SortedArrayStorage extends AbstractArrayStorage {
+
+//    private  static class ResumeComparator implements Comparator<Resume> {
+//
+//        @Override
+//        public int compare(Resume o1, Resume o2) {
+//            return o1.getUuid().compareTo(o2.getUuid());
+//        }
+//    }
+
+//    private static final Comparator<Resume> RESUME_COMPARATOR = new Comparator<Resume>() {
+//        @Override
+//        public int compare(Resume o1, Resume o2) {
+//            return o1.getUuid().compareTo(o2.getUuid());
+//        }
+//    };
+
+//    private static final Comparator<Resume> RESUME_COMPARATOR = (o1, o2) -> o1.getUuid().compareTo(o2.getUuid());
+
+    private static final Comparator<Resume> RESUME_COMPARATOR = Comparator.comparing(Resume::getUuid);
 
     @Override
     protected void insertResume(Object searchKey, Resume r) {
@@ -15,19 +35,20 @@ public class SortedArrayStorage extends AbstractArrayStorage {
     }
 
     @Override
-    protected void deleteResume (Object searchKey) {
+    protected void deleteResume(Object searchKey) {
         int emptyIndex = (int) searchKey;
         System.arraycopy(storage, emptyIndex + 1, storage, emptyIndex, size() - emptyIndex);
     }
 
     @Override
-    protected boolean isExist(String uuid) {
-        return (int) getSearchKey(uuid) >= 0;
+    protected boolean isExist(Object searchKey) {
+        return (int) searchKey >= 0;
     }
 
     @Override
     protected Object getSearchKey(String uuid) {
         Resume keyResume = new Resume(uuid);
-        return Arrays.binarySearch(storage, 0, size(), keyResume);
+        return Arrays.binarySearch(storage, 0, size(), keyResume, RESUME_COMPARATOR);
     }
 }
+

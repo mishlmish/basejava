@@ -1,59 +1,57 @@
 package com.urise.webapp.storage;
 
 import com.urise.webapp.model.Resume;
-import java.util.ArrayList;
-import java.util.List;
 
-public class ListStorage extends AbstractStorage {
-    private final List<Resume> list = new ArrayList<>();
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+public class MapUuidStorage extends AbstractStorage{
+    private final Map<String, Resume> map = new HashMap<>();
 
     @Override
     protected void doSave(Resume r, Object searchKey) {
-        list.add(r);
+        map.put((String) searchKey, r);
     }
 
     @Override
     protected void doUpdate(Resume r, Object searchKey) {
-        list.set((Integer) searchKey, r);
+        map.replace((String) searchKey, r);
     }
 
     @Override
     protected Resume doGet(Object searchKey) {
-        return list.get((Integer) searchKey);
+        return map.get((String) searchKey);
     }
 
     @Override
     protected void doDelete(Object searchKey) {
-        list.remove(((int) searchKey));
+        map.remove((String) searchKey);
     }
 
     @Override
     protected boolean isExist(Object searchKey) {
-        return searchKey != null;
+        return map.containsKey((String) searchKey);
     }
 
     @Override
     protected List<Resume> doCopyAll() {
-        return list;
+        return new ArrayList<>(map.values());
     }
 
     @Override
     protected Object getSearchKey(String uuid) {
-        for (int i = 0; i < size(); i++) {
-            if (list.get(i).getUuid().equals(uuid)) {
-                return i;
-            }
-        }
-        return null;
+        return uuid;
     }
 
     @Override
     public void clear() {
-        list.clear();
+        map.clear();
     }
 
     @Override
     public int size() {
-        return list.size();
+        return map.size();
     }
 }

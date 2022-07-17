@@ -2,7 +2,9 @@ package com.urise.webapp.storage;
 
 import com.urise.webapp.exeption.StorageException;
 import com.urise.webapp.model.Resume;
+
 import java.util.Arrays;
+import java.util.List;
 
 public abstract class AbstractArrayStorage extends AbstractStorage {
     protected static final int STORAGE_LIMIT = 10000;
@@ -15,10 +17,8 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
 
     @Override
     protected void doSave(Resume r, Object searchKey) {
-        String uuid = r.getUuid();
-        if (size >= STORAGE_LIMIT) {
-            throw new StorageException("Array storage overflowed, can not save uuid " + uuid, uuid);
-        }
+        saveOverflow(r.getUuid());
+
         insertResume(searchKey, r);
         size++;
     }
@@ -41,8 +41,9 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     }
 
     @Override
-    public Resume[] getAll() {
-        return Arrays.copyOf(storage, size);
+    public List<Resume> doCopyAll() {
+
+        return Arrays.asList(Arrays.copyOf(storage, size ));
     }
 
     @Override
@@ -54,6 +55,12 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     @Override
     public int size() {
         return size;
+    }
+
+    private void saveOverflow(String uuid) {
+        if (size >= STORAGE_LIMIT) {
+            throw new StorageException("Array storage overflowed, can not save uuid " + uuid, uuid);
+        }
     }
 }
 
