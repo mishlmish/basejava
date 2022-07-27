@@ -4,7 +4,7 @@ import com.urise.webapp.exeption.ExistStorageException;
 import com.urise.webapp.exeption.NotExistStorageException;
 import com.urise.webapp.model.Resume;
 
-import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public abstract class AbstractStorage implements Storage {
@@ -28,9 +28,9 @@ public abstract class AbstractStorage implements Storage {
         doSave(newResume, toSearchKey);
     }
 
-    public void update(Resume oldResume) {
-        Object toSearchKey = getExistSearchKey(oldResume.getUuid());
-        doUpdate(oldResume, toSearchKey);
+    public void update(Resume modifiedResume) {
+        Object toSearchKey = getExistSearchKey(modifiedResume.getUuid());
+        doUpdate(modifiedResume, toSearchKey);
     }
 
     public Resume get(String uuid) {
@@ -45,8 +45,10 @@ public abstract class AbstractStorage implements Storage {
 
     public List<Resume> getAllSorted() {
         List<Resume> list = doCopyAll();
-        Collections.sort(list, (r1, r2) -> r1.getFullName().compareTo(r2.getFullName()) != 0 ?
-                r1.getFullName().compareTo(r2.getFullName()) : r1.getUuid().compareTo(r2.getUuid()));
+//        for history)))
+//        list.sort((r1, r2) -> r1.getFullName().compareTo(r2.getFullName()) != 0 ?
+//                r1.getFullName().compareTo(r2.getFullName()) : r1.getUuid().compareTo(r2.getUuid()));
+        list.sort(Comparator.comparing(Resume::getFullName).thenComparing(Resume::getUuid));
         return list;
     }
 
@@ -55,7 +57,7 @@ public abstract class AbstractStorage implements Storage {
         if (!isExist(searchKey)) {
             throw new NotExistStorageException(uuid);
         }
-        return getSearchKey(uuid);
+        return searchKey;
     }
 
     private Object getNotExistSearchKey(String uuid) {
@@ -63,6 +65,6 @@ public abstract class AbstractStorage implements Storage {
         if (isExist(searchKey)) {
             throw new ExistStorageException(uuid);
         }
-        return getSearchKey(uuid);
+        return searchKey;
     }
 }

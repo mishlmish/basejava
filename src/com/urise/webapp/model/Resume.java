@@ -1,7 +1,8 @@
 package com.urise.webapp.model;
 
-import java.util.Objects;
 import java.util.UUID;
+
+import static java.util.Objects.requireNonNull;
 
 public class Resume implements Comparable<Resume> {
     private final String uuid;
@@ -20,10 +21,8 @@ public class Resume implements Comparable<Resume> {
     }
 
     public Resume(String uuid, String fullName) {
-        Objects.requireNonNull(uuid, "uuid must be not null");
-        Objects.requireNonNull(fullName, "fullName must be not null");
-        this.uuid = uuid;
-        this.fullName = fullName;
+        this.uuid = requireNonNull(uuid, "uuid must be not null");
+        this.fullName = requireNonNull(fullName, "fullName must be not null");
     }
 
     @Override
