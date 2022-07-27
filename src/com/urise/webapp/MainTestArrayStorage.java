@@ -13,11 +13,11 @@ public class MainTestArrayStorage {
 
     public static void main(String[] args) {
 
-         Resume r1= new Resume("u1");
-         Resume r2 = new Resume("u2");
-         Resume r3 = new Resume("u3");
-         Resume r4 = new Resume("u4");
-         Resume r5 = new Resume("u5");
+        Resume r1 = new Resume("u1", "Name1");
+        Resume r2 = new Resume("u2", "Name2");
+        Resume r3 = new Resume("u3", "Name3");
+        Resume r4 = new Resume("u4", "Name4");
+        Resume r5 = new Resume("u5", "Name5");
 //        Resume r10001 = new Resume();
 
         ARRAY_STORAGE.save(r1);

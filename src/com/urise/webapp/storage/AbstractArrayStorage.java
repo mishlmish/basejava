@@ -18,7 +18,6 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     @Override
     protected void doSave(Resume r, Object searchKey) {
         saveOverflow(r.getUuid());
-
         insertResume(searchKey, r);
         size++;
     }

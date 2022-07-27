@@ -21,8 +21,8 @@ public class Resume implements Comparable<Resume> {
     }
 
     public Resume(String uuid, String fullName) {
-        this.uuid = requireNonNull(uuid, "uuid must be not null");
-        this.fullName = requireNonNull(fullName, "fullName must be not null");
+        this.uuid = requireNonNull(uuid, "uuid must not be null");
+        this.fullName = requireNonNull(fullName, "fullName must not be null");
     }
 
     @Override
