@@ -28,7 +28,7 @@ public class SortedArrayStorage extends AbstractArrayStorage {
             .thenComparing(Resume::getUuid);
 
     @Override
-    protected void insertResume(Object searchKey, Resume r) {
+    protected void insertResume(Integer searchKey, Resume r) {
         int index = -(int) searchKey - 1;
         int length = size() - index;
         System.arraycopy(storage, index, storage, index + 1, length);
@@ -36,18 +36,18 @@ public class SortedArrayStorage extends AbstractArrayStorage {
     }
 
     @Override
-    protected void deleteResume(Object searchKey) {
-        int emptyIndex = (int) searchKey;
+    protected void deleteResume(Integer searchKey) {
+        int emptyIndex = searchKey;
         System.arraycopy(storage, emptyIndex + 1, storage, emptyIndex, size() - emptyIndex);
     }
 
     @Override
-    protected boolean isExist(Object searchKey) {
-        return (int) searchKey >= 0;
+    protected boolean isExist(Integer searchKey) {
+        return searchKey >= 0;
     }
 
     @Override
-    protected Object getSearchKey(String uuid) {
+    protected Integer getSearchKey(String uuid) {
         Resume keyResume = new Resume(uuid, "dummy");
         return Arrays.binarySearch(storage, 0, size(), keyResume, RESUME_COMPARATOR);
     }
