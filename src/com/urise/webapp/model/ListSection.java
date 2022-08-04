@@ -11,9 +11,6 @@ public class ListSection extends Section{
         return items;
     }
 
-    public ListSection() {
-    }
-
     public ListSection(String... items) {
         this(Arrays.asList(items));
     }

@@ -11,13 +11,13 @@ public class OrganizationSection extends Section{
         return organizations;
     }
 
-    public OrganizationSection(){}
+    public OrganizationSection() {}
 
     public OrganizationSection(Organization... organizations) {
         this(Arrays.asList(organizations));
     }
 
     public OrganizationSection(List<Organization> organizations) {
-        this.organizations = requireNonNull(organizations, "organizations must not be null") ;
+        this.organizations = requireNonNull(organizations, "organizations can not be null") ;
     }
 }

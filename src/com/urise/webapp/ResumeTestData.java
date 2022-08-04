@@ -4,11 +4,9 @@ import com.urise.webapp.model.*;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.HashMap;
-import java.util.Map;
 
 import static com.urise.webapp.ResumeTestData.DataBase.*;
-import static com.urise.webapp.ResumeTestData.DemoUtils.*;
+import static com.urise.webapp.ResumeTestData.FormatUtils.toLocDate;
 import static com.urise.webapp.model.ContactType.*;
 import static com.urise.webapp.model.SectionType.*;
 
@@ -29,15 +27,15 @@ public class ResumeTestData {
 
         resume.setSection(OBJECTIVE, new TextSection(textObjective1));
         resume.setSection(PERSONAL, new TextSection(textPersonal2));
-        resume.setSection(ACHIEVEMENT, new ListSection(arrAchievement3));
-        resume.setSection(QUALIFICATIONS, new ListSection(arrQualification4));
-        resume.setSection(EXPERIENCE, new OrganizationSection(experienceOrganizations));
-        resume.setSection(EDUCATION, new OrganizationSection(experienceOrganizations));
+        resume.setSection(ACHIEVEMENT, new ListSection(arrayAchievement3));
+        resume.setSection(QUALIFICATIONS, new ListSection(arrayQualification4));
+        resume.setSection(EXPERIENCE, new OrganizationSection(organizationsExperience5));
+        resume.setSection(EDUCATION, new OrganizationSection(organizationsEducation6));
 
-//start printing
+
         System.out.println(resume.getFullName().toUpperCase());
         System.out.println();
-//printing contacts
+
         for (ContactType type : ContactType.values()) {
             String contact = resume.getContact(type);
             if (contact != null) {
@@ -47,25 +45,28 @@ public class ResumeTestData {
 
         System.out.println();
         System.out.println();
-//printing sections
+
         for (SectionType type : SectionType.values()) {
             Section section = resume.getSection(type);
 
             if ((type == PERSONAL || type == OBJECTIVE) && section != null) {
                 System.out.println(type.getTitle().toUpperCase());
-                System.out.println(section);
+                System.out.println();
+                TextSection textSection = (TextSection) section;
+                System.out.println(textSection);
             }
             System.out.println();
 
             if ((type == QUALIFICATIONS || type == ACHIEVEMENT) && section != null) {
                 System.out.println(type.getTitle().toUpperCase());
+                System.out.println();
 
                 ListSection listSection = (ListSection) section;
 
                 for (int i = 0; i < listSection.getItems().size(); i++) {
                     String item = listSection.getItems().get(i);
                     if (item != null) {
-                        System.out.println("*  " + item + "\n");
+                        System.out.println(item + "\n");
                     }
                 }
                 System.out.println();
@@ -73,6 +74,7 @@ public class ResumeTestData {
 
             if ((type == EXPERIENCE || type == EDUCATION) && section != null) {
                 System.out.println(type.getTitle().toUpperCase());
+                System.out.println();
 
                 OrganizationSection organizations = (OrganizationSection) section;
 
@@ -80,76 +82,26 @@ public class ResumeTestData {
                     Organization item = organizations.getOrganizations().get(i);
                     if (item != null) {
 
-                        System.out.println("*  " + item + "\n");
+                        System.out.println(item + "\n");
+
                     }
                 }
                 System.out.println();
             }
-
         }
-
-        System.out.println("_____________________________________________________________________________");
-
-
-        Map<SectionType, Object> structure = new HashMap<>();
-        String textObjective = textObjective1;
-        structure.put(OBJECTIVE, textObjective);
-        System.out.println(structure.get(OBJECTIVE));
-
-
     }
 
-
-    static class DemoUtils {
-
-        static String formatText(int width, String str) {
-            String[] stringArr = str.split(" ");
-            String[] formattedArr = new String[stringArr.length];
-            int currentLength = 0;
-            int start = 0;
-            int caretNum = 0;
-
-            for (int i = 0; i < stringArr.length; i++) {
-                currentLength = currentLength + stringArr[i].length();
-
-                if (i == stringArr.length - 1 || currentLength + stringArr[i + 1].length() >= width) {
-                    String[] tempArr = new String[i + 1 - start];
-                    System.arraycopy(stringArr, start, tempArr, 0, i + 1 - start);
-
-                    formattedArr[caretNum++] = String.join(" ", tempArr);
-                    start = ++i;
-                    currentLength = 0;
-                }
-            }
-
-            String[] outputArr = new String[caretNum];
-            System.arraycopy(formattedArr, 0, outputArr, 0, caretNum);
-
-            return String.join("\n", outputArr);
-        }
-
-        static String formatText(String str) {
-            int defaultWidth = 70;
-            return formatText(defaultWidth, str);
-        }
-
-        static LocalDate toLocDate(boolean isStart, String stringDate) {
-            String[] strings = stringDate.split(" - ");
-            DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-
-            LocalDate startDate = LocalDate.parse("01/" + strings[0], dtf);
-            LocalDate endDate = LocalDate.parse("01/" + strings[1], dtf);
-            return isStart ? startDate : endDate;
-        }
-
+    static class FormatUtils {
         static LocalDate toLocDate(String stringDate) {
             DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
             return LocalDate.parse("01/" + stringDate, dtf);
         }
 
-
+        static LocalDate toLocDate1(String stringDate) {
+            DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+            return LocalDate.parse("01/" + stringDate, dtf);
+        }
     }
-
 
     static class DataBase {
         static final String FULL_NAME = "Григорий Кислин";
@@ -166,90 +118,90 @@ public class ResumeTestData {
         //      all the sections:
 
         //      text sections
-        static String textObjective1 = formatText("Ведущий стажировок и корпоративного обучения по Java Web и " +
-                "Enterprise технологиям");
+        static String textObjective1 = "Ведущий стажировок и корпоративного обучения по Java Web и " +
+                "Enterprise технологиям";
 
-        static String textPersonal2 = formatText("Аналитический склад ума, сильная логика, креативность, " +
-                "инициативность. Пурист кода и архитектуры.");
+        static String textPersonal2= "Аналитический склад ума, сильная логика, креативность, " +
+                "инициативность. Пурист кода и архитектуры.";
 
         //      list sections
-        static String[] arrAchievement3 = {
-                formatText("Организация команды и успешная реализация Java проектов для сторонних " +
+        static String[] arrayAchievement3 = {
+                "Организация команды и успешная реализация Java проектов для сторонних " +
                         "заказчиков: приложения автопарк на стеке Spring Cloud/микросервисы, система мониторинга " +
                         "показателей " +
                         "спортсменов на Spring Boot, участие в проекте МЭШ на Play-2, многомодульный Spring Boot + " +
                         "Vaadin " +
-                        "проект для комплексных DIY смет"),
+                        "проект для комплексных DIY смет",
 
-                formatText("ОС 2013 года: разработка проектов \"Разработка Web приложения\",\"Java" +
+                "ОС 2013 года: разработка проектов \"Разработка Web приложения\",\"Java" +
                         " Enterprise\", \"Многомодульный maven. Многопоточность. XML (JAXB/StAX). Веб сервисы " +
                         "(JAX-RS/SOAP). " +
                         "Удаленное взаимодействие (JMS/AKKA)\". Организация онлайн стажировок и ведение проектов. " +
                         "Более 3500 " +
-                        "выпускников."),
+                        "выпускников.",
 
-                formatText("Реализация двухфакторной аутентификации для онлайн платформы управления проектами Wrike. " +
-                        "Интеграция с Twilio, DuoSecurity, Google Authenticator, Jira, Zendesk."),
+                "Реализация двухфакторной аутентификации для онлайн платформы управления проектами Wrike. " +
+                        "Интеграция с Twilio, DuoSecurity, Google Authenticator, Jira, Zendesk.",
 
-                formatText("Налаживание процесса разработки и непрерывной интеграции ERP системы River BPM. " +
+                "Налаживание процесса разработки и непрерывной интеграции ERP системы River BPM. " +
                         "Интеграция с 1С, Bonita BPM, CMIS, LDAP. Разработка приложения управления окружением на " +
                         "стеке: Scala/Play/Anorm/JQuery. Разработка SSO аутентификации и авторизации различных ERP " +
-                        "модулей, интеграция CIFS/SMB java сервера."),
+                        "модулей, интеграция CIFS/SMB java сервера.",
 
-                formatText("Реализация c нуля Rich Internet Application приложения на стеке технологий JPA, Spring, " +
-                        "Spring-MVC, GWT, ExtGWT (GXT), Commet, HTML5, Highstock для алгоритмического трейдинга."),
+                "Реализация c нуля Rich Internet Application приложения на стеке технологий JPA, Spring, " +
+                        "Spring-MVC, GWT, ExtGWT (GXT), Commet, HTML5, Highstock для алгоритмического трейдинга.",
 
-                formatText("Создание JavaEE фреймворка для отказоустойчивого взаимодействия слабо-связанных сервисов " +
+                "Создание JavaEE фреймворка для отказоустойчивого взаимодействия слабо-связанных сервисов " +
                         "(SOA-base архитектура, JAX-WS, JMS, AS Glassfish). Сбор статистики сервисов и информации о " +
                         "состоянии через систему мониторинга Nagios. Реализация онлайн клиента для администрирования " +
-                        "и мониторинга системы по JMX (Jython/ Django)."),
+                        "и мониторинга системы по JMX (Jython/ Django).",
 
-                formatText("Реализация протоколов по приему платежей всех основных платежных системы России " +
-                        "(Cyberplat, Eport, Chronopay, Сбербанк), Белоруcсии(Erip, Osmp) и Никарагуа."),
+                "Реализация протоколов по приему платежей всех основных платежных системы России " +
+                        "(Cyberplat, Eport, Chronopay, Сбербанк), Белоруcсии(Erip, Osmp) и Никарагуа."
 
         };
 
-        static String[] arrQualification4 = {
-                formatText("JEE AS: GlassFish (v2.1, v3), OC4J, JBoss, Tomcat, Jetty, WebLogic, WSO2"),
+        static String[] arrayQualification4 = {
+                "JEE AS: GlassFish (v2.1, v3), OC4J, JBoss, Tomcat, Jetty, WebLogic, WSO2",
 
-                formatText("Version control: Subversion, Git, Mercury, ClearCase, Perforce"),
+                "Version control: Subversion, Git, Mercury, ClearCase, Perforce",
 
-                formatText("DB: PostgreSQL(наследование, pgplsql, PL/Python), Redis (Jedis), H2, Oracle, MySQL, " +
-                        "SQLite, MS SQL, HSQLDB"),
+                "DB: PostgreSQL(наследование, pgplsql, PL/Python), Redis (Jedis), H2, Oracle, MySQL, " +
+                        "SQLite, MS SQL, HSQLDB",
 
-                formatText("Languages: Java, Scala, Python/Jython/PL-Python, JavaScript, Groovy"),
+                "Languages: Java, Scala, Python/Jython/PL-Python, JavaScript, Groovy",
 
-                formatText("XML/XSD/XSLT, SQL, C/C++, Unix shell scripts"),
+                "XML/XSD/XSLT, SQL, C/C++, Unix shell scripts",
 
-                formatText("Java Frameworks: Java 8 (Time API, Streams), Guava, Java Executor, MyBatis, Spring (MVC, " +
+                "Java Frameworks: Java 8 (Time API, Streams), Guava, Java Executor, MyBatis, Spring (MVC, " +
                         "Security, Data, Clouds, Boot), JPA (Hibernate, EclipseLink), Guice, GWT(SmartGWT, " +
                         "ExtGWT/GXT), Vaadin, Jasperreports, Apache Commons, Eclipse SWT, JUnit, Selenium " +
-                        "(htmlelements)."),
+                        "(htmlelements).",
 
-                formatText("Python: Django."),
+                "Python: Django.",
 
-                formatText("JavaScript: jQuery, ExtJS, Bootstrap.js, underscore.js"),
+                "JavaScript: jQuery, ExtJS, Bootstrap.js, underscore.js",
 
-                formatText("Scala: SBT, Play2, Specs2, Anorm, Spray, Akka"),
+                "Scala: SBT, Play2, Specs2, Anorm, Spray, Akka",
 
-                formatText("Технологии: Servlet, JSP/JSTL, JAX-WS, REST, EJB, RMI, JMS, JavaMail, JAXB, StAX, SAX, " +
+                "Технологии: Servlet, JSP/JSTL, JAX-WS, REST, EJB, RMI, JMS, JavaMail, JAXB, StAX, SAX, " +
                         "DOM, XSLT, MDB, JMX, JDBC, JPA, JNDI, JAAS, SOAP, AJAX, Commet, HTML5, ESB, CMIS, BPMN2, " +
-                        "LDAP, OAuth1, OAuth2, JWT."),
+                        "LDAP, OAuth1, OAuth2, JWT.",
 
-                formatText("Инструменты: Maven + plugin development, Gradle, настройка Ngnix"),
+                "Инструменты: Maven + plugin development, Gradle, настройка Ngnix",
 
-                formatText("администрирование Hudson/Jenkins, Ant + custom task, SoapUI, JPublisher, Flyway, Nagios, " +
-                        "iReport, OpenCmis, Bonita, pgBouncer"),
+                "администрирование Hudson/Jenkins, Ant + custom task, SoapUI, JPublisher, Flyway, Nagios, " +
+                        "iReport, OpenCmis, Bonita, pgBouncer",
 
-                formatText("Отличное знание и опыт применения концепций ООП, SOA, шаблонов проектрирования, " +
-                        "архитектурных шаблонов, UML, функционального программирования"),
+                "Отличное знание и опыт применения концепций ООП, SOA, шаблонов проектрирования, " +
+                        "архитектурных шаблонов, UML, функционального программирования",
 
-                formatText("Родной русский, английский \"upper intermediate\""),
+                "Родной русский, английский \"upper intermediate\"",
 
         };
 
         //        organisations section
-        static Organization[] experienceOrganizations = {
+        static Organization[] organizationsExperience5 = {
 
                 new Organization("Java Online Projects", "http://javaops.ru/",
                         toLocDate("10/2013"), LocalDate.now(),
@@ -310,7 +262,7 @@ public class ResumeTestData {
                         "1000 S12 (CHILL, ASM).")
         };
 
-        static Organization[] educationOrganizations = {
+        static Organization[] organizationsEducation6 = {
 
                 new Organization("Coursera", "https://www.coursera.org/course/progfun",
                         toLocDate("03/2013"),
@@ -332,26 +284,19 @@ public class ResumeTestData {
                         toLocDate("03/1998"),
                         "6 месяцев обучения цифровым телефонным сетям (Москва)", ""),
 
-                new Organization("Alcatel", "http://www.alcatel.ru/",
-                        toLocDate("09/1997"),
-                        toLocDate("03/1998"),
-                        "6 месяцев обучения цифровым телефонным сетям (Москва)", ""),
-
                 new Organization("Санкт-Петербургский национальный исследовательский университет информационных " +
                         "технологий, механики и оптики", "http://www.ifmo.ru/",
-                        toLocDate("09/1993"),
-                        toLocDate("07/1996"),
-                        "Аспирантура (программист С, С++)", ""),
 
-                new Organization("Санкт-Петербургский национальный исследовательский университет информационных " +
-                        "технологий, механики и оптики", "http://www.ifmo.ru/",
-                        toLocDate(true, "09/1987 - 07/1993"),
-                        toLocDate(false, "09/1987 - 07/1993"),
-                        "Инженер (программист Fortran, C)", ""),
+                        new Organization.Position(toLocDate("09/1993"),
+                                toLocDate("07/1996"), "Аспирантура " +
+                                "(программист С, С++)", ""),
+
+                        new Organization.Position(toLocDate("09/1987"),
+                                toLocDate("07/1993"), "Инженер (программист " +
+                                "Fortran, C)", "")),
 
                 new Organization("Заочная физико-техническая школа при МФТИ", "http://www.school.mipt.ru/",
-                        toLocDate(true, "09/1984 - 06/1987"),
-                        toLocDate(false, "09/1984 - 06/1987"),
+                        toLocDate("09/1984"), toLocDate("06/1987"),
                         "Закончил с отличием", ""),
 
         };
