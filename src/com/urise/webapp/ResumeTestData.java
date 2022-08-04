@@ -54,6 +54,7 @@ public class ResumeTestData {
                 System.out.println();
                 TextSection textSection = (TextSection) section;
                 System.out.println(textSection);
+                System.out.println();
             }
             System.out.println();
 
@@ -93,11 +94,6 @@ public class ResumeTestData {
 
     static class FormatUtils {
         static LocalDate toLocDate(String stringDate) {
-            DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-            return LocalDate.parse("01/" + stringDate, dtf);
-        }
-
-        static LocalDate toLocDate1(String stringDate) {
             DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
             return LocalDate.parse("01/" + stringDate, dtf);
         }
