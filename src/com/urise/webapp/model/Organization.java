@@ -1,40 +1,53 @@
 package com.urise.webapp.model;
 
 
+import com.urise.webapp.util.DateUtil;
+
 import java.time.LocalDate;
+import java.time.Month;
 import java.util.List;
 
+import static com.urise.webapp.util.DateUtil.NOW;
 import static java.util.Arrays.asList;
 import static java.util.Objects.requireNonNull;
 
 public class Organization {
-    private String name;
-    private String webSite;
-    private List<Position> positions;
-    private Link link;
+    private final String name;
+    private final String url;
+    private final List<Position> positions;
+    private final Link link;
 
-    public String webSite() {
-        return webSite;
+    public String url() {
+        return url;
     }
 
     public List<Position> getPositions() {
         return positions;
     }
 
-    public Organization(String name, String webSite, Position... positions) {
-        this(name, webSite, asList(positions));
+    public Organization(Link link, List<Position> positions) {
+        this(link.getName(), link.getUrl(), positions);
     }
 
-    public Organization(String name, String webSite, List<Position> positions) {
+    public Organization(String name, String url, Position... positions) {
+        this(name, url, asList(positions));
+    }
+
+    public Organization(String name, String url, List<Position> positions) {
         this.name = name;
-        this.webSite = webSite;
+        this.url = url;
         this.positions = positions;
-        link = new Link(name, webSite);
+        link = new Link(name, url);
     }
 
-    public Organization(String name, String webSite, LocalDate startDate, LocalDate endDate, String title,
+    public Organization(String name, String url, LocalDate startDate, LocalDate endDate, String title,
                         String description) {
-        this(name, webSite, new Position(startDate, endDate, title, description));
+        this(name, url, new Position(startDate, endDate, title, description));
+    }
+
+    public Organization(String name, String url, LocalDate startDate, String title,
+                        String description) {
+        this(name, url, startDate, NOW, title, description);
     }
 
     @Override
@@ -63,14 +76,14 @@ public class Organization {
 
     @Override
     public String toString() {
-        return "Organisation(" + name + " " + webSite + " , " + positions + ")";
+        return "Organisation(" + name + " " + url + " , " + positions + ")";
     }
 
     public static class Position {
-        private LocalDate startDate;
-        private LocalDate endDate;
-        private String title;
-        private String description;
+        private final LocalDate startDate;
+        private final LocalDate endDate;
+        private final String title;
+        private final String description;
 
         public LocalDate getStartDate() {
             return startDate;
@@ -88,7 +101,14 @@ public class Organization {
             return description;
         }
 
+        public Position(int startYear, Month startMonth, String title, String description) {
+            this(DateUtil.of(startYear, startMonth), NOW, title, description);
+        }
 
+        public Position(int startYear, Month startMonth, int endYear, Month endMonth, String title,
+                        String description) {
+            this(DateUtil.of(startYear, startMonth), DateUtil.of(endYear, endMonth), title, description);
+        }
 
         public Position(LocalDate startDate, LocalDate endDate, String title, String description) {
             this.startDate = requireNonNull(startDate, "startDate can not be null");
@@ -131,10 +151,11 @@ public class Organization {
 
         @Override
         public String toString() {
-            return "Positions(" + startDate.getMonth().getValue() + "/" +
+            return endDate != NOW ? "Positions(" + startDate.getMonth().getValue() + "/" +
                     startDate.getYear() + " - " + endDate.getMonth().getValue() + "/" +
-                    endDate.getYear() + " , " + title + " , " + description + ")";
+                    endDate.getYear() + " , " + title + " , " + description + ")" :
+                    "Positions(" + startDate.getMonth().getValue() + "/" +
+                            startDate.getYear() + " - " + "Cейчас" + " , " + title + " , " + description + ")";
         }
-
     }
 }

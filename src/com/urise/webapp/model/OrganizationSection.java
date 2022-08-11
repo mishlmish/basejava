@@ -5,13 +5,11 @@ import java.util.List;
 import static java.util.Objects.requireNonNull;
 
 public class OrganizationSection extends AbstractSection {
-    private List<Organization> organizations;
+    private final List<Organization> organizations;
 
     public List<Organization> getOrganizations() {
         return organizations;
     }
-
-    public OrganizationSection() {}
 
     public OrganizationSection(Organization... organizations) {
         this(Arrays.asList(organizations));

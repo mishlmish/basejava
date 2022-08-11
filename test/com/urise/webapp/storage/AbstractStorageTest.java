@@ -9,7 +9,8 @@ import org.junit.Test;
 
 import java.util.List;
 
-import static com.urise.webapp.ResumeTestData.fillResume;
+import static com.urise.webapp.ResumeTestData.FillResume.fillResume;
+import static com.urise.webapp.ResumeTestData.FillResume.fillResume2;
 
 public abstract class AbstractStorageTest {
 
@@ -29,7 +30,7 @@ public abstract class AbstractStorageTest {
     private static final String UUID_NOT_EXIST = "dummy";
 
      static final Resume RESUME_1 = fillResume(UUID_1, FULL_NAME_1);
-     static final Resume RESUME_2 = fillResume(UUID_2, FULL_NAME_2);
+     static final Resume RESUME_2 = fillResume2(UUID_2, FULL_NAME_2);
      static final Resume RESUME_3 = fillResume(UUID_3, FULL_NAME_3);
      static final Resume RESUME_4 = fillResume(UUID_4, FULL_NAME_4);
      static final Resume RESUME_5 = fillResume(UUID_4, FULL_NAME_5);

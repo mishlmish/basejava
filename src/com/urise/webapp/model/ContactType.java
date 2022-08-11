@@ -11,11 +11,11 @@ public enum ContactType {
     STACKOVERFLOW("Профиль StackOverflow"),
     HOME_PAGE("Домашняя страница");
 
+    private final String title;
+
     public String getTitle() {
         return title;
     }
-
-    private final String title;
 
     ContactType(String title) {
         this.title = title;

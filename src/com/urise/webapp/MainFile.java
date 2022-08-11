@@ -90,8 +90,8 @@ public class MainFile {
 //        }
 //    }
 
-
-    static void printTree1(File dir) throws IOException {
+//TODO make shift spaces
+   static void printTree1(File dir) throws IOException {
         File[] files = dir.listFiles();
 
         for (File file : files) {

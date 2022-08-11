@@ -6,6 +6,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 import static com.urise.webapp.ResumeTestData.DataBase.*;
+import static com.urise.webapp.ResumeTestData.FillResume.fillResume;
 import static com.urise.webapp.ResumeTestData.FormatUtils.toLocDate;
 import static com.urise.webapp.model.ContactType.*;
 import static com.urise.webapp.model.SectionType.*;
@@ -76,26 +77,78 @@ public class ResumeTestData {
         }
     }
 
-    public static Resume fillResume(String uuid, String fullName) {
-        Resume resume = new Resume(uuid, fullName);
+    public static class FillResume {
 
-        resume.setContact(HOME_PHONE, telContact);
-        resume.setContact(SKYPE, skypeContact);
-        resume.setContact(MAIL, mailContact);
-        resume.setContact(LINKEDIN, linkedInContact);
-        resume.setContact(GITHUB, gitHubContact);
-        resume.setContact(STACKOVERFLOW, stackOverflowContact);
-        resume.setContact(HOME_PAGE, homePageContact);
-        System.out.println();
+        public static Resume fillResume(String uuid, String fullName) {
+            Resume resume = new Resume(uuid, fullName);
 
-        resume.setSection(OBJECTIVE, new TextSection(textObjective1));
-        resume.setSection(PERSONAL, new TextSection(textPersonal2));
-        resume.setSection(ACHIEVEMENT, new ListSection(arrayAchievement3));
-        resume.setSection(QUALIFICATIONS, new ListSection(arrayQualification4));
-        resume.setSection(EXPERIENCE, new OrganizationSection(organizationsExperience5));
-        resume.setSection(EDUCATION, new OrganizationSection(organizationsEducation6));
-        return resume;
-    }
+            resume.setContact(HOME_PHONE, telContact);
+            resume.setContact(SKYPE, skypeContact);
+            resume.setContact(MAIL, mailContact);
+            resume.setContact(LINKEDIN, linkedInContact);
+            resume.setContact(GITHUB, gitHubContact);
+            resume.setContact(STACKOVERFLOW, stackOverflowContact);
+            resume.setContact(HOME_PAGE, homePageContact);
+            System.out.println();
+
+            resume.setSection(OBJECTIVE, new TextSection(textObjective1));
+            resume.setSection(PERSONAL, new TextSection(textPersonal2));
+            resume.setSection(ACHIEVEMENT, new ListSection(arrayAchievement3));
+            resume.setSection(QUALIFICATIONS, new ListSection(arrayQualification4));
+            resume.setSection(EXPERIENCE, new OrganizationSection(organizationsExperience5));
+            resume.setSection(EDUCATION, new OrganizationSection(organizationsEducation6));
+            return resume;
+        }
+
+        public static Resume fillResume2(String uuid, String fullName) {
+            Resume resume = new Resume(uuid, fullName);
+
+            resume.setContact(HOME_PHONE, "telContact2");
+            resume.setContact(SKYPE, "skypeContact2");
+            resume.setContact(MAIL, "mailContact2");
+            resume.setContact(LINKEDIN, "linkedInContact2");
+            resume.setContact(GITHUB, "gitHubContact2");
+            resume.setContact(STACKOVERFLOW, "stackOverflowContact2");
+            resume.setContact(HOME_PAGE, "homePageContact2");
+            System.out.println();
+
+            resume.setSection(OBJECTIVE, new TextSection("textObjective2"));
+            resume.setSection(PERSONAL, new TextSection("textPersonal2"));
+            resume.setSection(ACHIEVEMENT, new ListSection("arrayAchievement21" + "arrayAchievement22"));
+            resume.setSection(QUALIFICATIONS, new ListSection("arrayQualification21" + "arrayQualification22"));
+            resume.setSection(EXPERIENCE, new OrganizationSection(organizationsExperience2));
+            resume.setSection(EDUCATION, new OrganizationSection(organizationsEducation2));
+            return resume;
+        }
+
+
+        static Organization[] organizationsExperience2 = {
+
+                new Organization("Projects", "http://ops.ru/",
+                        toLocDate("10/2015"),
+                        "title2", "Making smth 1"),
+
+                new Organization("org22", "https://2-2.ru",
+                        toLocDate("11/2013"),
+                        toLocDate("02/2016"),
+                        "worker2", "Cooling"),
+        };
+
+        static Organization[] organizationsEducation2 = {
+
+                new Organization("era", "https://www.era.org/cour",
+                        toLocDate("01/2010"),
+                        toLocDate("05/2011"),
+                        "'Func-Programming  Martin Later ", ""),
+
+                new Organization("oft", "http://www.oft-training.com/",
+                        toLocDate("02/2005"),
+                        toLocDate("04/2009"),
+                        "Курс  ИС. '", ""),
+        };
+
+
+        }
 
     static class FormatUtils {
         static LocalDate toLocDate(String stringDate) {
@@ -122,7 +175,7 @@ public class ResumeTestData {
         static String textObjective1 = "Ведущий стажировок и корпоративного обучения по Java Web и " +
                 "Enterprise технологиям";
 
-        static String textPersonal2= "Аналитический склад ума, сильная логика, креативность, " +
+        static String textPersonal2 = "Аналитический склад ума, сильная логика, креативность, " +
                 "инициативность. Пурист кода и архитектуры.";
 
         //      list sections
@@ -205,7 +258,7 @@ public class ResumeTestData {
         static Organization[] organizationsExperience5 = {
 
                 new Organization("Java Online Projects", "http://javaops.ru/",
-                        toLocDate("10/2013"), LocalDate.now(),
+                        toLocDate("10/2013"),
                         "Автор проекта.", "Создание, организация и проведение Java онлайн проектов и стажировок."),
 
                 new Organization("Wrike", "https://www.wrike.com/",
