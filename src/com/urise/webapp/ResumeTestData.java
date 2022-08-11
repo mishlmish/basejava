@@ -12,26 +12,10 @@ import static com.urise.webapp.model.SectionType.*;
 
 
 public class ResumeTestData {
+
     public static void main(String[] args) {
         System.out.println();
-        Resume resume = new Resume(FULL_NAME);
-
-        resume.setContact(HOME_PHONE, telContact);
-        resume.setContact(SKYPE, skypeContact);
-        resume.setContact(MAIL, mailContact);
-        resume.setContact(LINKEDIN, linkedInContact);
-        resume.setContact(GITHUB, gitHubContact);
-        resume.setContact(STACKOVERFLOW, stackOverflowContact);
-        resume.setContact(HOME_PAGE, homePageContact);
-        System.out.println();
-
-        resume.setSection(OBJECTIVE, new TextSection(textObjective1));
-        resume.setSection(PERSONAL, new TextSection(textPersonal2));
-        resume.setSection(ACHIEVEMENT, new ListSection(arrayAchievement3));
-        resume.setSection(QUALIFICATIONS, new ListSection(arrayQualification4));
-        resume.setSection(EXPERIENCE, new OrganizationSection(organizationsExperience5));
-        resume.setSection(EDUCATION, new OrganizationSection(organizationsEducation6));
-
+        Resume resume = fillResume("uuid", FULL_NAME);
 
         System.out.println(resume.getFullName().toUpperCase());
         System.out.println();
@@ -47,7 +31,7 @@ public class ResumeTestData {
         System.out.println();
 
         for (SectionType type : SectionType.values()) {
-            Section section = resume.getSection(type);
+            AbstractSection section = resume.getSection(type);
 
             if ((type == PERSONAL || type == OBJECTIVE) && section != null) {
                 System.out.println(type.getTitle().toUpperCase());
@@ -90,6 +74,27 @@ public class ResumeTestData {
                 System.out.println();
             }
         }
+    }
+
+    public static Resume fillResume(String uuid, String fullName) {
+        Resume resume = new Resume(uuid, fullName);
+
+        resume.setContact(HOME_PHONE, telContact);
+        resume.setContact(SKYPE, skypeContact);
+        resume.setContact(MAIL, mailContact);
+        resume.setContact(LINKEDIN, linkedInContact);
+        resume.setContact(GITHUB, gitHubContact);
+        resume.setContact(STACKOVERFLOW, stackOverflowContact);
+        resume.setContact(HOME_PAGE, homePageContact);
+        System.out.println();
+
+        resume.setSection(OBJECTIVE, new TextSection(textObjective1));
+        resume.setSection(PERSONAL, new TextSection(textPersonal2));
+        resume.setSection(ACHIEVEMENT, new ListSection(arrayAchievement3));
+        resume.setSection(QUALIFICATIONS, new ListSection(arrayQualification4));
+        resume.setSection(EXPERIENCE, new OrganizationSection(organizationsExperience5));
+        resume.setSection(EDUCATION, new OrganizationSection(organizationsEducation6));
+        return resume;
     }
 
     static class FormatUtils {

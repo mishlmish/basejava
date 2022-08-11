@@ -1,7 +1,7 @@
 package com.urise.webapp.model;
 
 import static java.util.Objects.requireNonNull;
-public class TextSection extends Section {
+public class TextSection extends AbstractSection {
     private  final String content;
 
     public TextSection(String content) {
@@ -17,19 +17,24 @@ public class TextSection extends Section {
         return content;
     }
 
-//    @Override
-//    public  boolean equals(Object o) {
-//        if(this == o) return  true;
-//        if (o == null || getClass() != o.getClass()) return false;
-//
-//        TextSection that = (TextSection) o;
-//
-//        return content.equals(that.content);
-//    }
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
 
-//    @Override
-//    public int hashCode() {
-//        return content.hashCode();
-//    }
+        TextSection that = (TextSection) o;
+
+        return content.equals(that.content);
+    }
+
+    @Override
+    public int hashCode() {
+        return content.hashCode();
+    }
+
 
 }
